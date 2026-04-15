@@ -16,7 +16,9 @@ public class ConfiguracaoSeguranca
     {
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
                         .requestMatchers("/login", "/cadastro").permitAll()
+                        .requestMatchers("/cliente/login", "/cliente/cadastro").permitAll()
                         .requestMatchers("/painel").hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
