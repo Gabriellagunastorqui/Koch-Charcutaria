@@ -19,19 +19,23 @@ public class ConfiguracaoSeguranca
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
                         .requestMatchers("/login", "/cadastro").permitAll()
                         .requestMatchers("/cliente/login", "/cliente/cadastro").permitAll()
-                        .requestMatchers("/painel").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/painel/**").hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
+                        .loginPage("/cliente/login")          // aponta para sua rota real
+                        .loginProcessingUrl("/cliente/login") // onde o form faz POST
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/painel", true)
+                        .failureUrl("/cliente/login?erro=true") // redireciona em falha
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/cliente/login?logout")
+                        .invalidateHttpSession(true)   // limpa a sessão
+                        .deleteCookies("JSESSIONID")   // remove o cookie
                         .permitAll()
                 )
                 .csrf(Customizer.withDefaults());
