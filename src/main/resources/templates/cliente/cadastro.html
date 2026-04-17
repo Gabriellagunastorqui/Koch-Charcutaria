@@ -47,27 +47,29 @@
         <img th:src="@{/css/logo.png}" alt="Logo Koch">
         <div class="subLogin">
             <h2>Realize seu Cadastro</h2>
-            <form th:action="@{/cliente/cadastro}" method="post"> <!-- era: /login -->
+            <form th:action="@{/cliente/cadastro}" th:object="${cadastroClienteRequest}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <div th:if="${#fields.hasErrors('email')}" class="alerta-erro" th:errors="*{email}"></div>
                 <div class="inputs">
                     <div class="solo">
                         <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" placeholder="Informe seu nome">
+                        <input type="text" id="nome" th:field="*{nome}" placeholder="Informe seu nome" required>
                     </div>
                     <div class="solo">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Informe seu E-mail">
+                        <input type="email" id="email" th:field="*{email}" placeholder="Informe seu E-mail" required>
                     </div>
                     <div class="solo">
                         <label for="telefone">Telefone</label> <!-- era: for="phone", label errado -->
-                        <input type="tel" id="telefone" name="telefone" placeholder="Informe seu telefone"> <!-- era: type="email" e name="email" -->
+                        <input type="tel" id="telefone" th:field="*{telefone}" placeholder="Informe seu telefone" required> <!-- era: type="email" e name="email" -->
                     </div>
                     <div class="solo">
                         <label for="endereco">Endereço</label> <!-- era: for="endereço" com ç, type label errado -->
-                        <input type="text" id="endereco" name="endereco" placeholder="Informe seu endereço completo"> <!-- era: type="password" -->
+                        <input type="text" id="endereco" th:field="*{endereco}" placeholder="Informe seu endereço completo" required> <!-- era: type="password" -->
                     </div>
                     <div class="solo">
                         <label for="senha">Senha</label>
-                        <input type="password" id="senha" name="senha" placeholder="Informe sua Senha">
+                        <input type="password" id="senha" th:field="*{senha}" placeholder="Informe sua Senha" required>
                     </div>
                     <div class="double">
                         <button type="submit">Cadastrar</button> <!-- era: "Fazer Login" -->
