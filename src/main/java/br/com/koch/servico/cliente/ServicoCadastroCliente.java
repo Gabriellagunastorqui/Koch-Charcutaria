@@ -7,7 +7,6 @@ import br.com.koch.repositorio.cliente.RepositorioCliente;
 import br.com.koch.repositorio.cliente.RepositorioUsuarioCliente;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ServicoCadastroCliente {
@@ -26,7 +25,6 @@ public class ServicoCadastroCliente {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
     public void cadastrar(CadastroClienteRequest request) {
         if (repositorioUsuarioCliente.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Já existe um cliente com esse e-mail.");

@@ -1,27 +1,11 @@
 package br.com.koch.modelo.cliente;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "Clientes")
 public class Cliente {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_clientes")
     private Integer id;
-
-    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-
-    @Column(name = "telefone", nullable = false, length = 12)
     private String telefone;
-
-    @Column(name = "endereco", nullable = false, length = 255)
     private String endereco;
-
-    @OneToOne(optional = true)
-    @JoinColumn(name = "id_usuarios", foreignKey = @ForeignKey(name = "fk_cliente_usuario"))
     private UsuarioCliente usuario;
 
     public Integer getId() { return id; }
